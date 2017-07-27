@@ -28,7 +28,6 @@ alias gx='gitx --all'
 alias gl='git log'
 
 # fasd
-
 alias v='f -e vim'
 alias o='a -e open'
 
@@ -43,7 +42,8 @@ function cpv { if [ `echo "$2" | grep ".*/$"` ]; then pv "$1" > "$2""$1"; else p
 alias .p='pbpaste'
 alias .c='pbcopy'
 
-alias vm='vagrant ssh'
-
 alias gpubsub="gcloud beta pubsub"
-alias gssh="gcloud compute config-ssh"
+alias gssh="gcloud compute config-ssh --remove && gcloud compute config-ssh"
+
+alias k="kubectl"
+alias g="gcloud"
