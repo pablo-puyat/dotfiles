@@ -4,16 +4,76 @@ ZSH_THEME="agnoster"
 
 EDITOR="vim"
 
+# setopts start
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt INC_APPEND_HISTORY
+setopt APPEND_HISTORY
+setopt EXTENDED_HISTORY
+setopt HIST_VERIFY
+setopt HIST_FIND_NO_DUPS
+setopt TRANSIENT_RPROMPT
+# setopts end
+
 #DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 
 source $ZSH/oh-my-zsh.sh
-source $HOME/.zsh/aliases
+# start aliases
+# ls
+alias ll='ls -alF'
+alias llt='ls -alFt'
+alias la='ls -lA'
+alias lt='ls -lAt'
+alias l='ls -CF'
+alias lr='ls -CFtr'
+
+# tmux
+alias t='tmux'
+alias ta='tmux attach -t'
+alias tl='tmux ls'
+alias tn='tmux new-session -s '
+function tur { ssh $1 -t "tmux attach-session -t ${1:gs/\./-} || tmux new-session -s ${1:gs/\./-}"; }
+
+# git
+alias gs='git status '
+alias ga='git add '
+alias gaa='git add .'
+alias gb='git branch '
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gd='git diff'
+alias gco='git checkout '
+alias gh='git hist'
+alias gl='git log'
+
+# fasd
+alias v='f -e vim'
+alias o='a -e open'
+
+# misc
+alias ip='ifconfig | grep inet\ '
+function qf { find . -name "*${1}*" }
+alias update_vim='vim +BundleInstall! +BundleClean'
+
+# vim
+function vimp {  print -z "vim --servername ${1} -S ~/.vim/sessions/${1}" }
+function v { vim --servername scratch --remote $1 }
+
+# google cloud
+alias gssh="gcloud compute config-ssh --remove && gcloud compute config-ssh"
+
+# kubernetes
+alias k="kubectl"
+alias g="gcloud"
+alias d="docker"
+alias dc="docker-compose"
+alias h="hyper"
+alias hc="hyper compose"
+# end aliases
 
 eval "$(fasd --init auto)"
 
 # vi mode start
-setopt transientrprompt
 function zle-keymap-select() {
   zle reset-prompt
   zle -R
@@ -40,6 +100,7 @@ fpath=(~/.zsh/completions $fpath)
 PROMPT='
 %{$fg_bold[white]%}%M %~
 %{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
+# prompt end
 
 #
 # The next line updates PATH for the Google Cloud SDK.
