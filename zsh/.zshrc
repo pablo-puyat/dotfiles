@@ -1,6 +1,6 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="agnoster"
+#ZSH_THEME="agnoster"
 
 EDITOR="vim"
 
@@ -14,7 +14,6 @@ setopt HIST_FIND_NO_DUPS
 setopt TRANSIENT_RPROMPT
 # setopts end
 
-#DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 
 source $ZSH/oh-my-zsh.sh
@@ -51,13 +50,14 @@ alias v='f -e vim'
 alias o='a -e open'
 
 # misc
+alias histg='history | grep -i '
 alias ip='ifconfig | grep inet\ '
 function qf { find . -name "*${1}*" }
-alias update_vim='vim +BundleInstall! +BundleClean'
 
 # vim
 function vimp {  print -z "vim --servername ${1} -S ~/.vim/sessions/${1}" }
 function v { vim --servername scratch --remote $1 }
+alias update_vim='vim +BundleInstall! +BundleClean'
 
 # google cloud
 alias gssh="gcloud compute config-ssh --remove && gcloud compute config-ssh"
@@ -71,6 +71,9 @@ alias h="hyper"
 alias hc="hyper compose"
 # end aliases
 
+# start completions
+compdef tur=ssh
+# end completions
 eval "$(fasd --init auto)"
 
 # vi mode start
@@ -100,17 +103,18 @@ fpath=(~/.zsh/completions $fpath)
 PROMPT='
 %{$fg_bold[white]%}%M %~
 %{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
-# prompt end
 
 #
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f /Users/taprice/Desktop/google-cloud-sdk/path.zsh.inc ]; then
-  source '/Users/taprice/Desktop/google-cloud-sdk/path.zsh.inc'
+# The next line enables shell command completion for gcloud.
+if [ -f $HOME/bin/google-cloud-sdk/completion.zsh.inc ]; then
+  source "$HOME/bin/google-cloud-sdk/completion.zsh.inc"
 fi
 
-# The next line enables shell command completion for gcloud.
-if [ -f /Users/taprice/Desktop/google-cloud-sdk/completion.zsh.inc ]; then
-  source '/Users/taprice/Desktop/google-cloud-sdk/completion.zsh.inc'
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f $HOME/bin/google-cloud-sdk/path.zsh.inc ]; then
+  source "$HOME/bin/google-cloud-sdk/path.zsh.inc"
 fi
 
 source $(brew --prefix php-version)/php-version.sh && php-version 7
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
