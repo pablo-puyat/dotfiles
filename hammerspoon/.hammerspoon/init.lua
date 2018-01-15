@@ -60,7 +60,7 @@ end)
 
 -----------------------------------------------
 -- hyper down to cycle through
--- center 1/2, 1/3
+-- center 1/2, 1/3, 3/4
 -----------------------------------------------
 
 hs.hotkey.bind(hyper, "down", function()
@@ -69,15 +69,20 @@ hs.hotkey.bind(hyper, "down", function()
     local screen = win:screen()
     local max = screen:frame()
 
-    if f.w <= math.floor(max.w / 3) then
+    if f.w >= max.w - math.floor(max.w / 4) then
         f.x = math.floor(max.w / 4) 
         f.y = 0
         f.w = math.floor(max.w / 2)
         f.h = max.h
-    else
+	elseif f.w >= math.floor(max.w /2) then
         f.x = math.floor(max.w / 3) 
         f.y = 0
         f.w = math.floor(max.w / 3)
+        f.h = max.h
+    else
+        f.x = math.floor(max.w / 4) 
+        f.y = 0
+        f.w = max.w - math.floor(max.w / 4)
         f.h = max.h
     end
 
