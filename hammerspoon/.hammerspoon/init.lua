@@ -3,7 +3,7 @@
 -----------------------------------------------
 
 local hyper = {"shift", "cmd", "alt", "ctrl"}
-
+local currentScreen = hs.screen.mainScreen():currentMode()
 -----------------------------------------------
 -- hyper left to cycle between 
 -- left 1/2, 1/3, 1/4
@@ -69,31 +69,37 @@ hs.hotkey.bind(hyper, "down", function()
     local screen = win:screen()
     local max = screen:frame()
 
-    if f.w >= max.w - math.floor(max.w / 4) then
-        f.x = math.floor(max.w / 4) 
-        f.y = 0
-        f.w = math.floor(max.w / 2)
-        f.h = max.h
-	elseif f.w >= math.floor(max.w /2) then
-        f.x = math.floor(max.w / 3) 
-        f.y = 0
-        f.w = math.floor(max.w / 3)
-        f.h = max.h
-    else
-        f.x = math.floor(max.w / 4) 
-        f.y = 0
-        f.w = max.w - math.floor(max.w / 4)
-        f.h = max.h
+    if (currentScreen.w == 1280 and currentScreen.h == 800 and currentScreen.scale == 2) then
+        f.x = 0
+        f.y = math.floor(max.h / 2)
+        f.w = max.w
+        f.h = math.ceil(max.h / 2)
+    else 
+        if f.w >= max.w - math.floor(max.w / 4) then
+            f.x = math.floor(max.w / 4) 
+            f.y = 0
+            f.w = math.floor(max.w / 2)
+            f.h = max.h
+        elseif f.w >= math.floor(max.w /2) then
+            f.x = math.floor(max.w / 3) 
+            f.y = 0
+            f.w = math.floor(max.w / 3)
+            f.h = max.h
+        else
+            f.x = math.floor(max.w / 4) 
+            f.y = 0
+            f.w = max.w - math.floor(max.w / 4)
+            f.h = max.h
+        end
     end
-
+    
     win:setFrame(f)
 end)
 
 -----------------------------------------------
--- hyper up for fullscreen
+-- hyper f for fullscreen
 -----------------------------------------------
-
-hs.hotkey.bind(hyper, "up", function()
+hs.hotkey.bind(hyper, "f", function()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
@@ -103,6 +109,29 @@ hs.hotkey.bind(hyper, "up", function()
     f.y = max.y
     f.w = max.w
     f.h = max.h
+    
+    win:setFrame(f)
+end)
+
+-----------------------------------------------
+-- hyper up for fullscreen
+-----------------------------------------------
+hs.hotkey.bind(hyper, "up", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x
+    f.y = max.y
+    f.w = max.w
+
+    if (currentScreen.w == 1280 and currentScreen.h == 800 and currentScreen.scale == 2) then
+        f.h = math.floor(max.h / 2)
+    else 
+        f.h = max.h
+    end
+    
     win:setFrame(f)
 end)
 
