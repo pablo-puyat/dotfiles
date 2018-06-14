@@ -258,6 +258,6 @@ unbind C-a
 unbind C-b
 set -g prefix C-a
 bind C-a send-prefix
-
+bind | split-window -h
 # move status line to top
 #set -g status-position top

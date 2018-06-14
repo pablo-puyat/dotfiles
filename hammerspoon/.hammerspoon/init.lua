@@ -80,7 +80,7 @@ hs.hotkey.bind(hyper, "down", function()
             f.y = 0
             f.w = math.floor(max.w / 2)
             f.h = max.h
-        elseif f.w >= math.floor(max.w /2) then
+        elseif f.w >= math.floor(max.w / 2) then
             f.x = math.floor(max.w / 3) 
             f.y = 0
             f.w = math.floor(max.w / 3)

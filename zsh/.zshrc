@@ -1,6 +1,6 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
-#ZSH_THEME="agnoster"
+ZSH_THEME="agnoster"
 
 EDITOR="vim"
 
@@ -53,7 +53,8 @@ alias o='a -e open'
 alias histg='history | grep -i '
 alias ip='ifconfig | grep inet\ '
 function qf { find . -name "*${1}*" }
-
+function copy { cat ${1} | pbcopy }
+function smush { cat $1 | tr '\n' ' ' }
 # vim
 function vimp {  print -z "vim --servername ${1} -S ~/.vim/sessions/${1}" }
 function v { vim --servername scratch --remote $1 }
