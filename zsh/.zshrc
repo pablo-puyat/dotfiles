@@ -68,6 +68,9 @@ alias k="kubectl"
 alias g="gcloud"
 alias d="docker"
 alias dc="docker-compose"
+alias dcrebuild="docker-compose down -v && docker-compose up --build"
+function dshell { docker exec -it $1 sh }
+function dbash { docker exec -it $1 bash }
 alias h="hyper"
 alias hc="hyper compose"
 # end aliases
