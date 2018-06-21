@@ -116,6 +116,6 @@ if [ -f $HOME/bin/google-cloud-sdk/path.zsh.inc ]; then
   source "$HOME/bin/google-cloud-sdk/path.zsh.inc"
 fi
 
-source $(brew --prefix php-version)/php-version.sh && php-version 7
+#source $(brew --prefix php-version)/php-version.sh && php-version 7
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

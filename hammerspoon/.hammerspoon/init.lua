@@ -69,7 +69,7 @@ hs.hotkey.bind(hyper, "down", function()
     local screen = win:screen()
     local max = screen:frame()
 
-    if (currentScreen.w == 1280 and currentScreen.h == 800 and currentScreen.scale == 2) then
+    if (screen.w == 1280 and screen.h == 800 and screen.scale == 2) then
         f.x = 0
         f.y = math.floor(max.h / 2)
         f.w = max.w
@@ -126,7 +126,7 @@ hs.hotkey.bind(hyper, "up", function()
     f.y = max.y
     f.w = max.w
 
-    if (currentScreen.w == 1280 and currentScreen.h == 800 and currentScreen.scale == 2) then
+    if (screen.w == 1280 and screen.h == 800 and screen.scale == 2) then
         f.h = math.floor(max.h / 2)
     else 
         f.h = max.h
