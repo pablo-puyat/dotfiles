@@ -55,6 +55,7 @@ alias ip='ifconfig | grep inet\ '
 function qf { find . -name "*${1}*" }
 function copy { cat ${1} | pbcopy }
 function smush { cat $1 | tr '\n' ' ' }
+alias ci='code-insiders '
 # vim
 function vimp {  print -z "vim --servername ${1} -S ~/.vim/sessions/${1}" }
 function v { vim --servername scratch --remote $1 }
