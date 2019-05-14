@@ -123,3 +123,9 @@ fi
 #source $(brew --prefix php-version)/php-version.sh && php-version 7
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+###-tns-completion-start-###
+if [ -f /Users/taprice/.tnsrc ]; then 
+    source /Users/taprice/.tnsrc 
+fi
+###-tns-completion-end-###

@@ -1,4 +1,4 @@
-export PATH="./vendor/bin:$HOME/.composer/vendor/bin:$HOME/node_modules:/usr/local/sbin:$HOME/bin:/usr/local/bin:$PATH"
+export PATH="$HOME/bin:./vendor/bin:$HOME/.composer/vendor/bin:$HOME/node_modules:/usr/local/sbin:/usr/local/bin:$PATH"
 export EDITOR=vim
 export SAVEHIST=10000
 export HISTSIZE=10000
