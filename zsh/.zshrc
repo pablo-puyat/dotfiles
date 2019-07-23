@@ -109,23 +109,6 @@ PROMPT='
 %{$fg_bold[white]%}%M %~
 %{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
 
-#
-# The next line enables shell command completion for gcloud.
-if [ -f $HOME/bin/google-cloud-sdk/completion.zsh.inc ]; then
-  source "$HOME/bin/google-cloud-sdk/completion.zsh.inc"
+if [ -f ~/.zsh/environment ]; then
+  source ~/.zsh/environment
 fi
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f $HOME/bin/google-cloud-sdk/path.zsh.inc ]; then
-  source "$HOME/bin/google-cloud-sdk/path.zsh.inc"
-fi
-
-#source $(brew --prefix php-version)/php-version.sh && php-version 7
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-###-tns-completion-start-###
-if [ -f /Users/taprice/.tnsrc ]; then 
-    source /Users/taprice/.tnsrc 
-fi
-###-tns-completion-end-###
