@@ -3,6 +3,8 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="agnoster"
 
 EDITOR="vim"
+SAVEHIST=10000
+HISTSIZE=10000
 
 # setopts start
 setopt HIST_EXPIRE_DUPS_FIRST

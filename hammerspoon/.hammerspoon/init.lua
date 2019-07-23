@@ -1,9 +1,15 @@
+-- hs.loadSpoon("ClipBoardTool")
+-- spoon.ClipBoardTool:bindHotkeys({show_clipboard = {{"cmd", "shift"}, "v"}})
+-- spoon.ClipBoardTool.paste_on_select = true
+-- spoon.ClipBoardTool:start()
+
 -----------------------------------------------
 -- Set up
 -----------------------------------------------
 
 local hyper = {"shift", "cmd", "alt", "ctrl"}
 local currentScreen = hs.screen.mainScreen():currentMode()
+
 -----------------------------------------------
 -- hyper left to cycle between 
 -- left 1/2, 1/3, 1/4
@@ -14,19 +20,10 @@ hs.hotkey.bind(hyper, "left", function()
 	local f = win:frame()
 	local screen = win:screen()
 	local max = screen:frame()
-	local sections
-
-	if f.w >= math.floor(max.w / 2) then
-		sections = 3
-	elseif f.w >= math.floor(max.w / 3) then
-		sections = 4
-	else
-		sections = 2
-	end
 
 	f.x = 0 
 	f.y = 0
-	f.w = math.floor(max.w / sections)
+	f.w = math.floor(max.w / 2)
 	f.h = max.h
 	win:setFrame(f)
 end)
@@ -43,21 +40,11 @@ hs.hotkey.bind(hyper, "right", function()
 	local max = screen:frame()
 
 	local halfsize = math.floor(max.w / 2)
-	local thirdsize = math.floor(max.w / 3)
-	local quartersize = math.floor(max.w / 4)
 
-	if f.w == halfsize and f.x == halfsize and f.h == max.h then
-		f.w = thirdsize
-		f.x = thirdszie * 2
-	elseif f.x == thirdsize then
-		f.w = quartersize
-		f.x = quartersize * 3
-	else
 		f.x = halfsize
 		f.w = halfsize
 		f.h = max.h
 		f.y = 0
-	end
 
 	win:setFrame(f)
 end)
@@ -108,6 +95,7 @@ hs.hotkey.bind(hyper, "up", function()
 	end
 
 	win:setFrame(f)
+
 end)
 
 -----------------------------------------------
