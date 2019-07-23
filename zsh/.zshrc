@@ -57,11 +57,9 @@ alias ip='ifconfig | grep inet\ '
 function qf { find . -name "*${1}*" }
 function copy { cat ${1} | pbcopy }
 function smush { cat $1 | tr '\n' ' ' }
-alias ci='code-insiders '
 # vim
 function vimp {  print -z "vim --servername ${1} -S ~/.vim/sessions/${1}" }
 function v { vim --servername scratch --remote $1 }
-alias update_vim='vim +BundleInstall! +BundleClean'
 
 # google cloud
 alias gssh="gcloud compute config-ssh --remove && gcloud compute config-ssh"
@@ -74,12 +72,11 @@ alias dc="docker-compose"
 alias dcrebuild="docker-compose down -v && docker-compose up --build"
 function dsh { docker exec -it $1 sh }
 function dbash { docker exec -it $1 bash }
-alias h="hyper"
-alias hc="hyper compose"
 # end aliases
 
 # start completions
 compdef tur=ssh
+fpath=(~/.zsh/completions $fpath)
 # end completions
 eval "$(fasd --init auto)"
 
@@ -105,7 +102,6 @@ function vi_mode_prompt_info() {
 RPS1='$(vi_mode_prompt_info)'
 # vi mode end
 
-fpath=(~/.zsh/completions $fpath)
 
 PROMPT='
 %{$fg_bold[white]%}%M %~
