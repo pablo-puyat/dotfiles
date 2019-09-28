@@ -1,18 +1,12 @@
--- hs.loadSpoon("ClipBoardTool")
--- spoon.ClipBoardTool:bindHotkeys({show_clipboard = {{"cmd", "shift"}, "v"}})
--- spoon.ClipBoardTool.paste_on_select = true
--- spoon.ClipBoardTool:start()
-
 -----------------------------------------------
 -- Set up
 -----------------------------------------------
 
 local hyper = {"shift", "cmd", "alt", "ctrl"}
-local currentScreen = hs.screen.mainScreen():currentMode()
 
 -----------------------------------------------
--- hyper left to cycle between 
--- left 1/2, 1/3, 1/4
+-- hyper left to push window 
+-- left half / third of screen
 -----------------------------------------------
 
 hs.hotkey.bind(hyper, "left", function()
@@ -21,16 +15,22 @@ hs.hotkey.bind(hyper, "left", function()
 	local screen = win:screen()
 	local max = screen:frame()
 
-	f.x = 0 
+	local halfsize = math.floor(max.w / 2)
+	local thirdsize = math.floor(max.w / 3)
+        if f.w >= halfsize - 10 and f.w <= halfsize + 10  then
+		f.w = thirdsize
+	else
+		f.w = halfsize
+	end
 	f.y = 0
-	f.w = math.floor(max.w / 2)
+	f.x = 0
 	f.h = max.h
 	win:setFrame(f)
 end)
 
 -----------------------------------------------
--- hyper right to cycle between
--- right 1/2, 1/3, 1/4
+-- hyper right to push window 
+-- right half / third of screen
 -----------------------------------------------
 
 hs.hotkey.bind(hyper, "right", function()
@@ -40,12 +40,16 @@ hs.hotkey.bind(hyper, "right", function()
 	local max = screen:frame()
 
 	local halfsize = math.floor(max.w / 2)
-
+	local thirdsize = math.floor(max.w / 3)
+        if f.w >= halfsize - 10 and f.w <= halfsize + 10  then
+		f.x = thirdsize * 2
+		f.w = thirdsize
+	else
 		f.x = halfsize
 		f.w = halfsize
-		f.h = max.h
-		f.y = 0
-
+	end
+	f.y = 0
+	f.h = max.h
 	win:setFrame(f)
 end)
 
@@ -60,17 +64,17 @@ hs.hotkey.bind(hyper, "down", function()
 	local screen = win:screen()
 	local max = screen:frame()
 
-	if f.w ~= math.floor(max.w / 2) then
-		f.x = math.floor(max.w / 4) 
-		f.y = 0
-		f.w = math.floor(max.w / 2)
-		f.h = max.h
+	local halfsize = math.floor(max.w / 2)
+	local thirdsize = math.floor(max.w / 3)
+        if f.w >= halfsize - 10 and f.w <= halfsize + 10  then
+		f.x = thirdsize
+		f.w = thirdsize
 	else 
-		f.x = math.floor(max.w / 3) 
-		f.y = 0
-		f.w = math.floor(max.w / 3)
-		f.h = max.h
+		f.x = math.floor(max.w / 4) 
+		f.w = halfsize
 	end
+	f.y = 0
+	f.h = max.h
 
 	win:setFrame(f)
 end)
@@ -79,23 +83,7 @@ end)
 -- hyper up for fullscreen
 -----------------------------------------------
 hs.hotkey.bind(hyper, "up", function()
-	local win = hs.window.focusedWindow()
-	local f = win:frame()
-	local screen = win:screen()
-	local max = screen:frame()
-
-	f.x = max.x
-	f.y = max.y
-	f.w = max.w
-
-	if (screen.w == 1280 and screen.h == 800 and screen.scale == 2) then
-		f.h = math.floor(max.h / 2)
-	else 
-		f.h = max.h
-	end
-
-	win:setFrame(f)
-
+	win:toggleZoom()
 end)
 
 -----------------------------------------------
