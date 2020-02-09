@@ -80,10 +80,41 @@ hs.hotkey.bind(hyper, "down", function()
 end)
 
 -----------------------------------------------
--- hyper up for fullscreen
+-- hyper up for push up
 -----------------------------------------------
 hs.hotkey.bind(hyper, "up", function()
-	win:toggleZoom()
+	local win = hs.window.focusedWindow()
+	local f = win:frame()
+	local screen = win:screen()
+	local max = screen:frame()
+
+	f.w = max.w
+	f.h = math.floor(max.h /2)
+	if f.y <= 50 then 
+		f.y = math.floor(max.h / 2) + 20
+	else
+		f.y = 0
+	end
+	f.x = 0
+
+	win:setFrame(f)
+end)
+
+-----------------------------------------------
+-- hyper space for fullscreen
+-----------------------------------------------
+hs.hotkey.bind(hyper, "space", function()
+	local win = hs.window.focusedWindow()
+	local f = win:frame()
+	local screen = win:screen()
+	local max = screen:frame()
+
+	f.w = max.w
+	f.h = max.h
+	f.x = 0
+	f.y = 0
+
+	win:setFrame(f)
 end)
 
 -----------------------------------------------
