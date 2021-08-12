@@ -31,7 +31,6 @@ alias t='tmux'
 alias ta='tmux attach -t'
 alias tl='tmux ls'
 alias tn='tmux new-session -s '
-function tur { ssh $1 -t "tmux attach-session -t ${1:gs/\./-} || tmux new-session -s ${1:gs/\./-}"; }
 
 # git
 alias gs='git status '
@@ -52,10 +51,11 @@ alias o='a -e open'
 # misc
 alias histg='history | grep -i '
 alias ip='ifconfig | grep inet\ '
+alias sail='./vendor/bin/sail'
 function qf { find . -name "*${1}*" }
 function copy { cat ${1} | pbcopy }
 function smush { cat $1 | tr '\n' ' ' }
-alias ci='code-insiders '
+
 # vim
 function vimp {  print -z "vim --servername ${1} -S ~/.vim/sessions/${1}" }
 function v { vim --servername scratch --remote $1 }
@@ -76,9 +76,8 @@ alias h="hyper"
 alias hc="hyper compose"
 # end aliases
 
-# start completions
-compdef tur=ssh
-# end completions
+eval "$(ssh-agent -s)"
+
 eval "$(fasd --init auto)"
 
 # vi mode start
@@ -107,8 +106,11 @@ fpath=(~/.zsh/completions $fpath)
 
 PROMPT='
 %{$fg_bold[white]%}%M %~
-%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
+%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}%{$fg_bold[blue]%} % %{$reset_color%}'
 
 if [ -f ~/.zsh/environment ]; then
   source ~/.zsh/environment
 fi
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$HOME/go/bin:/usr/local/go/bin:$PATH:$HOME/.rvm/bin"
