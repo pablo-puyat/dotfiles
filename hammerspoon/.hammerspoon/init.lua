@@ -3,10 +3,10 @@
 -----------------------------------------------
 
 local hyper = {"shift", "cmd", "alt", "ctrl"}
-local currentScreen = hs.screen.mainScreen():currentMode()
+
 -----------------------------------------------
--- hyper left to cycle between 
--- left 1/2, 1/3, 1/4
+-- hyper left to push window 
+-- left half / third of screen
 -----------------------------------------------
 
 hs.hotkey.bind(hyper, "left", function()
@@ -14,26 +14,23 @@ hs.hotkey.bind(hyper, "left", function()
 	local f = win:frame()
 	local screen = win:screen()
 	local max = screen:frame()
-	local sections
 
-	if f.w >= math.floor(max.w / 2) then
-		sections = 3
-	elseif f.w >= math.floor(max.w / 3) then
-		sections = 4
+	local halfsize = math.floor(max.w / 2)
+	local thirdsize = math.floor(max.w / 3)
+        if f.w >= halfsize - 10 and f.w <= halfsize + 10  then
+		f.w = thirdsize
 	else
-		sections = 2
+		f.w = halfsize
 	end
-
-	f.x = 0 
 	f.y = 0
-	f.w = math.floor(max.w / sections)
+	f.x = 0
 	f.h = max.h
 	win:setFrame(f)
 end)
 
 -----------------------------------------------
--- hyper right to cycle between
--- right 1/2, 1/3, 1/4
+-- hyper right to push window 
+-- right half / third of screen
 -----------------------------------------------
 
 hs.hotkey.bind(hyper, "right", function()
@@ -44,21 +41,15 @@ hs.hotkey.bind(hyper, "right", function()
 
 	local halfsize = math.floor(max.w / 2)
 	local thirdsize = math.floor(max.w / 3)
-	local quartersize = math.floor(max.w / 4)
-
-	if f.w == halfsize and f.x == halfsize and f.h == max.h then
+        if f.w >= halfsize - 10 and f.w <= halfsize + 10  then
+		f.x = thirdsize * 2
 		f.w = thirdsize
-		f.x = thirdszie * 2
-	elseif f.x == thirdsize then
-		f.w = quartersize
-		f.x = quartersize * 3
 	else
 		f.x = halfsize
 		f.w = halfsize
-		f.h = max.h
-		f.y = 0
 	end
-
+	f.y = 0
+	f.h = max.h
 	win:setFrame(f)
 end)
 
@@ -73,23 +64,23 @@ hs.hotkey.bind(hyper, "down", function()
 	local screen = win:screen()
 	local max = screen:frame()
 
-	if f.w ~= math.floor(max.w / 2) then
-		f.x = math.floor(max.w / 4) 
-		f.y = 0
-		f.w = math.floor(max.w / 2)
-		f.h = max.h
+	local halfsize = math.floor(max.w / 2)
+	local thirdsize = math.floor(max.w / 3)
+        if f.w >= halfsize - 10 and f.w <= halfsize + 10  then
+		f.x = thirdsize
+		f.w = thirdsize
 	else 
-		f.x = math.floor(max.w / 3) 
-		f.y = 0
-		f.w = math.floor(max.w / 3)
-		f.h = max.h
+		f.x = math.floor(max.w / 4) 
+		f.w = halfsize
 	end
+	f.y = 0
+	f.h = max.h
 
 	win:setFrame(f)
 end)
 
 -----------------------------------------------
--- hyper up for fullscreen
+-- hyper up for push up
 -----------------------------------------------
 hs.hotkey.bind(hyper, "up", function()
 	local win = hs.window.focusedWindow()
@@ -97,15 +88,31 @@ hs.hotkey.bind(hyper, "up", function()
 	local screen = win:screen()
 	local max = screen:frame()
 
-	f.x = max.x
-	f.y = max.y
 	f.w = max.w
-
-	if (screen.w == 1280 and screen.h == 800 and screen.scale == 2) then
-		f.h = math.floor(max.h / 2)
-	else 
-		f.h = max.h
+	f.h = math.floor(max.h /2)
+	if f.y <= 50 then 
+		f.y = math.floor(max.h / 2) + 20
+	else
+		f.y = 0
 	end
+	f.x = 0
+
+	win:setFrame(f)
+end)
+
+-----------------------------------------------
+-- hyper space for fullscreen
+-----------------------------------------------
+hs.hotkey.bind(hyper, "space", function()
+	local win = hs.window.focusedWindow()
+	local f = win:frame()
+	local screen = win:screen()
+	local max = screen:frame()
+
+	f.w = max.w
+	f.h = max.h
+	f.x = 0
+	f.y = 0
 
 	win:setFrame(f)
 end)
