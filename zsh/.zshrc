@@ -1,6 +1,6 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="agnoster"
+#ZSH_THEME="agnoster"
 
 EDITOR="vim"
 SAVEHIST=10000
@@ -43,7 +43,7 @@ alias gc='git commit'
 alias gcm='git commit -m'
 alias gd='git diff'
 alias gco='git checkout '
-alias gh='git hist'
+alias gr='git restore'
 alias gl='git log'
 
 # fasd
@@ -59,7 +59,7 @@ function copy { cat ${1} | pbcopy }
 function smush { cat $1 | tr '\n' ' ' }
 
 # google cloud
-alias gssh="gcloud compute config-ssh --remove && gcloud compute config-ssh"
+#alias gssh="gcloud compute config-ssh --remove && gcloud compute config-ssh"
 
 # kubernetes
 alias k="kubectl"
@@ -102,7 +102,7 @@ RPS1='$(vi_mode_prompt_info)'
 
 
 PROMPT='
-%{$fg_bold[white]%}%M %~
+%M %~
 %{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}%{$fg_bold[blue]%} % %{$reset_color%}'
 
 if [ -f ~/.zsh/environment ]; then
