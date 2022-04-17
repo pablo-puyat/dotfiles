@@ -1,6 +1,6 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
-#ZSH_THEME="agnoster"
+ZSH_THEME="agnoster"
 
 EDITOR="vim"
 SAVEHIST=10000
@@ -43,7 +43,7 @@ alias gc='git commit'
 alias gcm='git commit -m'
 alias gd='git diff'
 alias gco='git checkout '
-alias gr='git restore'
+alias gh='git hist'
 alias gl='git log'
 
 # fasd
@@ -53,22 +53,15 @@ alias o='a -e open'
 # misc
 alias histg='history | grep -i '
 alias ip='ifconfig | grep inet\ '
-alias sail='./vendor/bin/sail'
 function qf { find . -name "*${1}*" }
 function copy { cat ${1} | pbcopy }
 function smush { cat $1 | tr '\n' ' ' }
 
-# google cloud
-#alias gssh="gcloud compute config-ssh --remove && gcloud compute config-ssh"
-
-# kubernetes
-alias k="kubectl"
-alias g="gcloud"
-alias d="docker"
-alias dc="docker-compose"
-alias dcrebuild="docker-compose down -v && docker-compose up --build"
 function dsh { docker exec -it $1 sh }
 function dbash { docker exec -it $1 bash }
+function dps { docker ps }
+function dpsa { docker ps -a }
+alias sail="./vendor/bin/sail"
 # end aliases
 
 eval "$(ssh-agent -s)"
@@ -102,12 +95,16 @@ RPS1='$(vi_mode_prompt_info)'
 
 
 PROMPT='
-%M %~
+%{$fg_bold[white]%}%M %~
 %{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}%{$fg_bold[blue]%} % %{$reset_color%}'
 
 if [ -f ~/.zsh/environment ]; then
   source ~/.zsh/environment
 fi
 
+eval "$(phpenv init -)"
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$HOME/go/bin:/usr/local/go/bin:$PATH:$HOME/.rvm/bin"
+
+# Created by `pipx` on 2021-12-04 03:08:16
+export PATH="$PATH:/home/taprice/.local/bin"
