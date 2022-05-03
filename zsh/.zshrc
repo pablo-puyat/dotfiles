@@ -108,3 +108,5 @@ export PATH="$HOME/go/bin:/usr/local/go/bin:$PATH:$HOME/.rvm/bin"
 
 # Created by `pipx` on 2021-12-04 03:08:16
 export PATH="$PATH:/home/taprice/.local/bin"
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
