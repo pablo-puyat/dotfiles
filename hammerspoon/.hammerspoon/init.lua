@@ -67,6 +67,22 @@ hs.hotkey.bind(hyper, "4", function()
 end)
 
 -----------------------------------------------
+-- hyper 5 to resize window to quarter width
+-----------------------------------------------
+
+hs.hotkey.bind(hyper, "5", function()
+	local win = hs.window.focusedWindow()
+	local f = win:frame()
+	local screen = win:screen()
+	local max = screen:frame()
+
+	f.h = max.h
+	f.w = max.w - (max.w / 3)
+	win:setFrame(f)
+	win:centerOnScreen()
+end)
+
+-----------------------------------------------
 -- hyper q to push window left
 -----------------------------------------------
 

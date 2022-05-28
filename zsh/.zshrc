@@ -102,7 +102,6 @@ if [ -f ~/.zsh/environment ]; then
   source ~/.zsh/environment
 fi
 
-eval "$(phpenv init -)"
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$HOME/go/bin:/usr/local/go/bin:$PATH:$HOME/.rvm/bin"
 
