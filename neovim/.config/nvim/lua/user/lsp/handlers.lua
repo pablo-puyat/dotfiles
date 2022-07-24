@@ -1,5 +1,5 @@
 local M = {}
-
+local blah = {}
 -- TODO: backfill this to template
 M.setup = function()
   local signs = {
@@ -8,18 +8,17 @@ M.setup = function()
     { name = "DiagnosticSignHint", text = "" },
     { name = "DiagnosticSignInfo", text = "" },
   }
-
-  for _, sign in ipairs(signs) do
+  for _, sign in pairs(signs) do
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
   end
 
   local config = {
     -- disable virtual text
-    virtual_text = false,
+    --virtual_text = false,
     -- show signs
-    signs = {
-      active = signs,
-    },
+    --signs = {
+    --  active = signs,
+    --},
     update_in_insert = true,
     underline = true,
     severity_sort = true,
@@ -30,6 +29,13 @@ M.setup = function()
       source = "always",
       header = "",
       prefix = "",
+    },
+    virtual_text = {
+      spacing = 4,
+      source = 'always',
+      severity = {
+        min = vim.diagnostic.severity.HINT,
+      },
     },
   }
 
@@ -46,7 +52,7 @@ end
 
 local function lsp_highlight_document(client)
   -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
+  if client.server_capabilities.document_highlight then
     vim.api.nvim_exec(
       [[
       augroup lsp_document_highlight
@@ -54,7 +60,7 @@ local function lsp_highlight_document(client)
         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
       augroup END
-    ]],
+    ]] ,
       false
     )
   end

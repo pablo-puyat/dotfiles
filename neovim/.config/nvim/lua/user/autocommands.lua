@@ -1,4 +1,15 @@
 vim.cmd [[
+  "hi ActiveWindow guibg=#17252c
+  "hi InactiveWindow guibg=#0D1B22
+
+  " Call method on window enter
+  "augroup WindowManagement
+    "autocmd!
+    "autocmd WinEnter * call Handle_Win_Enter()
+  "augroup END
+  "function! Handle_Win_Enter()
+  "  setlocal winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
+  "endfunction
   augroup _general_settings
     autocmd!
     autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR> 

@@ -1,9 +1,12 @@
-vim.cmd [[
-try
-  colorscheme kanagawa
-  highlight Normal ctermbg=none guibg=none
-catch /^Vim\%((\a\+)\)\=:E185/
-  colorscheme default
-  set background=dark
-endtry
-]]
+vim.opt.laststatus = 3
+vim.opt.fillchars:append({
+    horiz = '━',
+    horizup = '┻',
+    horizdown = '┳',
+    vert = '┃',
+    vertleft = '┨',
+    vertright = '┣',
+    verthoriz = '╋',
+})
+require'kanagawa'.setup({ globalStatus = true })
+vim.cmd("colorscheme kanagawa")

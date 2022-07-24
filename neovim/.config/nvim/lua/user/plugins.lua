@@ -18,8 +18,8 @@ end
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
 vim.cmd [[
   augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+  autocmd!
+  autocmd BufWritePost plugins.lua source <afile> | PackerSync
   augroup end
 ]]
 
@@ -55,25 +55,24 @@ return packer.startup(function(use)
   --use "ahmedkhalf/project.nvim"
   use "lewis6991/impatient.nvim"
   --use "lukas-reineke/indent-blankline.nvim"
-  use "goolord/alpha-nvim"
+  --use "goolord/alpha-nvim"
   use "antoinemadec/FixCursorHold.nvim" -- This is needed to fix lsp doc highlight
   use "folke/which-key.nvim"
 
+        use {
+                "luukvbaal/nnn.nvim",
+                config = function() require("nnn").setup() end
+        }
   -- Colorschemes
-  -- use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
   use "lunarvim/darkplus.nvim"
-use 'tpope/vim-repeat'
-use 'ggandor/lightspeed.nvim'
-use "rebelot/kanagawa.nvim"
-use {
+  --use 'tpope/vim-repeat'
+  --use 'ggandor/lightspeed.nvim'
+  use "rebelot/kanagawa.nvim"
+  use "Shatur/neovim-ayu"
+  use {
     "mcchrish/zenbones.nvim",
     requires = "rktjmp/lush.nvim"
-}
-use {
-    "catppuccin/nvim",
-    as = "catppuccin"
-}
-use 'navarasu/onedark.nvim'
+  }
   -- cmp plugins
   use "hrsh7th/nvim-cmp" -- The completion plugin
   use "hrsh7th/cmp-buffer" -- buffer completions
@@ -91,78 +90,79 @@ use 'navarasu/onedark.nvim'
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
-  use "simrat39/symbols-outline.nvim"
-use{
-  "zbirenbaum/copilot.lua",
-  event = {"VimEnter"},
-  config = function()
-    vim.defer_fn(function()
-      require("copilot").setup()
-    end, 100)
-  end,
-}
-    use {"github/copilot.vim"}
-    use {
-        "zbirenbaum/copilot-cmp",
-        after = {"copilot.lua", "nvim-cmp"},
-    }
+  --use "simrat39/symbols-outline.nvim"
+  use{
+    "zbirenbaum/copilot.lua",
+    event = {"VimEnter"},
+    config = function()
+      vim.defer_fn(function()
+        require("copilot").setup()
+      end, 100)
+    end,
+  }
+  use {"github/copilot.vim"}
+  use {
+    "zbirenbaum/copilot-cmp",
+    after = {"copilot.lua", "nvim-cmp"},
+  }
   -- Telescope
   use "nvim-telescope/telescope.nvim"
-use "ziontee113/syntax-tree-surfer"
-    use {
-        "aserowy/tmux.nvim",
-        config = function()
-            require("tmux").setup({
-                -- overwrite default configuration
-                -- here, e.g. to enable default bindings
-                copy_sync = {
-                    -- enables copy sync and overwrites all register actions to
-                    -- sync registers *, +, unnamed, and 0 till 9 from tmux in advance
-                    enable = true,
-                },
-                navigation = {
-                    -- enables default keybindings (C-hjkl) for normal mode
-                    enable_default_keybindings = true,
-                },
-                resize = {
-                    -- enables default keybindings (A-hjkl) for normal mode
-                    enable_default_keybindings = true,
-                }
-            })
-        end
-    }
+  --use "ziontee113/syntax-tree-surfer"
+  use {
+    "aserowy/tmux.nvim",
+    config = function()
+      require("tmux").setup({
+        -- overwrite default configuration
+        -- here, e.g. to enable default bindings
+        copy_sync = {
+          -- enables copy sync and overwrites all register actions to
+          -- sync registers *, +, unnamed, and 0 till 9 from tmux in advance
+          enable = true,
+        },
+        navigation = {
+          -- enables default keybindings (C-hjkl) for normal mode
+          enable_default_keybindings = true,
+        },
+        resize = {
+          -- enables default keybindings (A-hjkl) for normal mode
+          enable_default_keybindings = true,
+        }
+      })
+    end
+  }
 
-    use 'folke/lsp-colors.nvim'
-    use {
-        'folke/zen-mode.nvim',
-        config = function()
-            require("zen-mode").setup {
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
-            }
-        end
-    }
+  use 'folke/lsp-colors.nvim'
+  use {
+    'folke/zen-mode.nvim',
+    config = function()
+      require("zen-mode").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
   -- Treesitter
   use {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
   }
-  use "JoosepAlviste/nvim-ts-context-commentstring"
+  use { 'tami5/lspsaga.nvim' }
+  --use "JoosepAlviste/nvim-ts-context-commentstring"
 
   -- Git
-  use "lewis6991/gitsigns.nvim"
-use {
-  "folke/trouble.nvim",
-  requires = "kyazdani42/nvim-web-devicons",
-  config = function()
-    require("trouble").setup {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
-  end
-}
+  --use "lewis6991/gitsigns.nvim"
+  --use {
+    --"folke/trouble.nvim",
+    --requires = "kyazdani42/nvim-web-devicons",
+    --config = function()
+      --require("trouble").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      --}
+    --end
+  --}
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
