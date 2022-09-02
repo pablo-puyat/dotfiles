@@ -8,7 +8,7 @@ local setup = {
     marks = true, -- shows a list of your marks on ' and `
     registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
     spelling = {
-      enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
+      enabled = false, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
       suggestions = 20, -- how many suggestions should be shown in the list?
     },
     -- the presets plugin, adds help for a bunch of default keybindings in Neovim
@@ -80,12 +80,11 @@ local opts = {
 
 local mappings = {
   ["="] = { "<cmd>lua vim.lsp.buf.format()<cr>", "Format" },
-  ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
   ["b"] = {
     "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
     "Buffers",
   },
-  ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
+  ["e"] = { "<cmd>Ex<cr>", "Explorer" },
   ["w"] = { "<cmd>w!<CR>", "Save" },
   ["q"] = { "<cmd>q!<CR>", "Quit" },
   ["/"] = { "<cmd>lua require('Comment').toggle()<CR>", "Comment" },
@@ -97,7 +96,6 @@ local mappings = {
   },
   ["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
   ["t"] = { "<cmd>TroubleToggle<cr>", "Trouble" },
-
   p = {
     name = "Packer",
     c = { "<cmd>PackerCompile<cr>", "Compile" },
@@ -106,7 +104,13 @@ local mappings = {
     S = { "<cmd>PackerStatus<cr>", "Status" },
     u = { "<cmd>PackerUpdate<cr>", "Update" },
   },
-
+  z = {
+    name = "TrueZen",
+    a = { "<cmd>TZAtaraxis<cr>", "Ataraxis" },
+    m = { "<cmd>TZMinimalist<cr>", "Minimalist" },
+    n = { "<cmd>TZNarrow<cr>", "Narrow" },
+    f = { "<cmd>TZFocus<cr>", "Focus" },
+  },
   g = {
     name = "Git",
     g = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "Lazygit" },
@@ -129,7 +133,6 @@ local mappings = {
       "Diff",
     },
   },
-
   l = {
     name = "LSP",
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
@@ -179,6 +182,7 @@ local vopts = {
 }
 local vmappings = {
   ["/"] = { "<ESC><CMD>lua require('Comment.api').gc(vim.fn.visualmode())<CR>", "Comment" },
+  ["f"] = { "'<,'>TZNarrow<CR>", "Focus Selection" },
 }
 
 which_key.setup(setup)
