@@ -84,25 +84,24 @@ local mappings = {
     "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
     "Buffers",
   },
-  ["e"] = { "<cmd>Ex<cr>", "Explorer" },
-  ["w"] = { "<cmd>w!<CR>", "Save" },
-  ["q"] = { "<cmd>q!<CR>", "Quit" },
-  ["/"] = { "<cmd>lua require('Comment').toggle()<CR>", "Comment" },
-  ["c"] = { "<cmd>close<CR>", "Close window" },
-  ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
-  ["f"] = {
-    "<cmd>Telescope find_files<cr>",
-    "Find files",
-  },
-  ["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
-  ["t"] = { "<cmd>TroubleToggle<cr>", "Trouble" },
+  ["e"] = { "<cmd>require('minimal-nnn').start()<cr>", "explorer" },
+  ["w"] = { "<cmd>w!<CR>", "save" },
+  ["q"] = { "<cmd>wq<CR>", "quit" },
+  ["/"] = { "<cmd>CommentToggle<CR>", "comment" },
+  ["c"] = { "<cmd>close<CR>", "close window" },
+  ["h"] = { "<cmd>nohlsearch<CR>", "no highlight" },
+  ["o"] = { "<cmd>Telescope git_status<CR>", "open recent" },
+  ["f"] = { "<cmd>Telescope find_files<cr>", "Find files" },
+  ["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "find text" },
+  ["t"] = { "<cmd>TroubleToggle<cr>", "trouble" },
+  ["a"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
   p = {
     name = "Packer",
-    c = { "<cmd>PackerCompile<cr>", "Compile" },
-    i = { "<cmd>PackerInstall<cr>", "Install" },
-    s = { "<cmd>PackerSync<cr>", "Sync" },
-    S = { "<cmd>PackerStatus<cr>", "Status" },
-    u = { "<cmd>PackerUpdate<cr>", "Update" },
+    c = { "<cmd>PackerCompile<cr>", "compile" },
+    i = { "<cmd>PackerInstall<cr>", "install" },
+    s = { "<cmd>PackerSync<cr>", "sync" },
+    S = { "<cmd>PackerStatus<cr>", "status" },
+    u = { "<cmd>PackerUpdate<cr>", "update" },
   },
   z = {
     name = "TrueZen",
@@ -125,7 +124,6 @@ local mappings = {
       "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
       "Undo Stage Hunk",
     },
-    o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
     c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
     d = {
@@ -135,7 +133,6 @@ local mappings = {
   },
   l = {
     name = "LSP",
-    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
     d = {
       "<cmd>Telescope lsp_document_diagnostics<cr>",
       "Document Diagnostics",
@@ -181,7 +178,7 @@ local vopts = {
   nowait = true, -- use `nowait` when creating keymaps
 }
 local vmappings = {
-  ["/"] = { "<ESC><CMD>lua require('Comment.api').gc(vim.fn.visualmode())<CR>", "Comment" },
+  ["/"] = { "<ESC>CommentToggle<CR>", "Comment" },
   ["f"] = { "'<,'>TZNarrow<CR>", "Focus Selection" },
 }
 

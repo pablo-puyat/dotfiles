@@ -25,14 +25,8 @@ alias ll='ls -alF'
 alias llt='ls -alFt'
 alias la='ls -lA'
 alias lt='ls -lAt'
-alias l='ls -CF'
+alias l='ls -1'
 alias lr='ls -CFtr'
-
-# tmux
-alias t='tmux'
-alias ta='tmux attach -t'
-alias tl='tmux ls'
-alias tn='tmux new-session -s '
 
 # git
 alias gs='git status '
@@ -43,8 +37,9 @@ alias gc='git commit'
 alias gcm='git commit -m'
 alias gd='git diff'
 alias gco='git checkout '
-alias gh='git hist'
 alias gl='git log'
+alias g='git '
+alias gp='git -P'
 
 # fasd
 alias v='f -e vim'
@@ -94,9 +89,18 @@ RPS1='$(vi_mode_prompt_info)'
 # vi mode end
 
 
+# Load version control information
+autoload -Uz vcs_info
+precmd() { vcs_info }
+
+# Format the vcs_info_msg_0_ variable
+zstyle ':vcs_info:git:*' formats 'on %b'
+
 PROMPT='
 %{$fg_bold[white]%}%M %~
 %{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}%{$fg_bold[blue]%} % %{$reset_color%}'
+
+RPROMPT=\$vcs_info_msg_0_
 
 if [ -f ~/.zsh/environment ]; then
   source ~/.zsh/environment
