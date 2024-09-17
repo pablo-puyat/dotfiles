@@ -1,2 +1,5 @@
-ln -s tmux/tmux.conf ~/.tmux.conf
-ln -s zsh/zshrc ~/.zshrc
+rm ~/.tmux.conf
+ln -s .tmux.conf ~/.tmux.conf
+
+rm ~/.zshrc
+ln -s .zshrc ~/.zshrc
