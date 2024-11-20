@@ -1,2 +1,6 @@
- karabiner/.config/karabiner/automatic_backups/*
- zsh/.zshenv
+.phpactor.json
+.DS_Store
+.dccache
+.php-cs-fixer.cache
+.phpstorm.meta.php
+_ide_helper_models.php
