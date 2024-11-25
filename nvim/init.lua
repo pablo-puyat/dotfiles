@@ -201,6 +201,7 @@ vim.keymap.set('n', 'D', '"_D', { desc = "Delete to black hole"})
 vim.keymap.set('n', 'dd', '"_d', { desc = "Delete to black hole"})
 vim.keymap.set('n', 'x', '"_x', { desc = "Delete to black hole"})
 
+vim.keymap.set("n", "<leader>|", "<cmd>AerialToggle!<CR>")
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
