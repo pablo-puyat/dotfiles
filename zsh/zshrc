@@ -35,6 +35,7 @@ alias h='history | grep -i '
 alias ip='ifconfig | grep inet\ '
 alias e='nvim '
 alias tm='tmux new -s $(basename $PWD)'
+alias k='bat --style=plain --color=always ~/shortcut-reference.md'
 
 # Functions
 function qf { find . -name "*${1}*" }
@@ -43,6 +44,11 @@ function dsh { docker exec -it $1 sh }
 function dbash { docker exec -it $1 bash }
 function dps { docker ps }
 function dpsa { docker ps -a }
+eval $(zoxide init zsh)
+function z {
+    local dir
+    dir="$(zoxide query -l | fzf --height 40% --reverse)" && cd "${dir}"
+}
 
 # Completions
 autoload -Uz compinit && compinit
@@ -80,3 +86,10 @@ git_branch() {
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.zshenv ] && source ~/.zshenv
 
+# Ctrl+R for history search (this is usually default but we can ensure it)
+bindkey '^R' fzf-history-widget
+
+# Ctrl+T for file search
+bindkey '^T' fzf-file-widget
+bindkey '^[[A' fzf-history-widget
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
