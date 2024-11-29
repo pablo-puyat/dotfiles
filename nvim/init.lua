@@ -173,6 +173,7 @@ vim.keymap.set('n', 'O', 'O<Esc>', { desc = 'Add blank line above' })
 vim.keymap.set('n', 'o', 'o<Esc>', { desc = 'Add blank line below' })
 vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'Join lines and keep cursor' })
 vim.keymap.set('x', 'p', '"_dP', { desc = 'Paste over without yanking' })
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -197,7 +198,8 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 -- keymaps to change how registers are handled when changing or deleting text
 vim.keymap.set('n', 'd', '"_d', { desc = "Delete to black hole"})
-vim.keymap.set('n', 'D', '"_D', { desc = "Delete to black hole"})
+vim.keymap.set('v', 'd', '"_d', { desc = "Delete to black hole"})
+
 vim.keymap.set('n', 'dd', '"_d', { desc = "Delete to black hole"})
 vim.keymap.set('n', 'x', '"_x', { desc = "Delete to black hole"})
 
@@ -326,13 +328,14 @@ require('lazy').setup({
 
       -- Document existing key chains
       spec = {
+        { '<leader>g', group = '[G]it' },
+        { '<leader>h', group = '[H]arpoon' },
         { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
         { '<leader>d', group = '[D]ocument' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },
   },
@@ -415,7 +418,7 @@ require('lazy').setup({
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>o', builtin.find_files, { desc = '[O]pen file' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
@@ -881,28 +884,6 @@ require('lazy').setup({
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
-
-      -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
-
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%2l:%-2v'
-      end
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_git = function()
-        return nil
-      end
-
-      -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
   { -- Highlight, edit, and navigate code
