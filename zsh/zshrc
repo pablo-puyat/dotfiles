@@ -15,10 +15,8 @@ setopt HIST_IGNORE_DUPS
 setopt TRANSIENT_RPROMPT
 
 # Aliases
-alias llt='ls -alFt'
-alias lt='ls -lAt'
-alias l='ls -1'
-alias lr='ls -CFtr'
+alias la='eza -l -b --no-user --total-size -a --no-quotes'
+alias l='eza'
 alias gs='git status '
 alias gaa='git add .'
 alias ga='git add '
@@ -82,8 +80,7 @@ git_branch() {
     fi
 }
 
-# Load additional configurations
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
 [ -f ~/.zshenv ] && source ~/.zshenv
 
 # Ctrl+R for history search (this is usually default but we can ensure it)
