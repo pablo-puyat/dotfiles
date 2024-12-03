@@ -8,4 +8,6 @@ ln -s $PWD/zsh/zshrc $HOME/.zshrc
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
     ln -s $PWD/aerospace $CONFIG_DIR
+    ln -s $PWD/karabiner $CONFIG_DIR
+    ln -s $PWD/hammerspoon $HOME/.hammerspoon
 fi
