@@ -15,7 +15,7 @@ setopt HIST_IGNORE_DUPS
 setopt TRANSIENT_RPROMPT
 
 # Aliases
-alias la='eza -l -b --no-user --total-size -a --no-quotes'
+alias la='eza -l -b --no-user -a --no-quotes'
 alias l='eza'
 alias gs='git status '
 alias gaa='git add .'
