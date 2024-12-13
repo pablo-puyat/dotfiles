@@ -164,6 +164,11 @@ vim.opt.smartindent = true
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+vim.keymap.set('n', '<C-j>', ':Treewalker Down<CR>', { noremap = true })
+vim.keymap.set('n', '<C-k>', ':Treewalker Up<CR>', { noremap = true })
+vim.keymap.set('n', '<C-h>', ':Treewalker Left<CR>', { noremap = true })
+vim.keymap.set('n', '<C-l>', ':Treewalker Right<CR>', { noremap = true })
+--
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
