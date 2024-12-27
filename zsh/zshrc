@@ -69,14 +69,14 @@ precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats '%b'
 setopt PROMPT_SUBST
 PROMPT='
-%F{black}%B%m %~%b%f $(git_branch)
+%F{green}%B%m %~%b%f $(git_branch)
 %F{green}%B%(!.#.$)%b%f '
 
 # Git branch function
 git_branch() {
     branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
     if [[ $branch != "" ]]; then
-        echo '%F{blue}%B \ue0a0 '$branch'%b%f'
+        echo '%F{green}%B \ue0a0 '$branch'%b%f'
     fi
 }
 
