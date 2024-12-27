@@ -1,0 +1,6 @@
+copy-on-select = true
+font-size = 20
+theme = zenwritten_dark
+window-padding-x = 18
+window-padding-y = 18
+window-padding-balance = true
