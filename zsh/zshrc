@@ -1,10 +1,26 @@
-# Set editor
-export EDITOR="nvim"
+# =============================================================================
+# ZSH CONFIGURATION
+# =============================================================================
 
-# History settings
+# -----------------------------------------------------------------------------
+# Environment Variables
+# -----------------------------------------------------------------------------
+export EDITOR="nvim"
+export KEYTIMEOUT=1
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+# NVM Configuration
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+
+# -----------------------------------------------------------------------------
+# History Configuration
+# -----------------------------------------------------------------------------
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
+
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt INC_APPEND_HISTORY
 setopt APPEND_HISTORY
@@ -12,81 +28,143 @@ setopt EXTENDED_HISTORY
 setopt HIST_VERIFY
 setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_DUPS
+
+# -----------------------------------------------------------------------------
+# Shell Options
+# -----------------------------------------------------------------------------
 setopt TRANSIENT_RPROMPT
+setopt PROMPT_SUBST
 
-# Aliases
-alias la='eza -l -b --no-user -a --no-quotes'
-alias l='eza'
-alias gs='git status '
-alias gaa='git add .'
-alias ga='git add '
-alias gb='git -P branch '
-alias gc='git commit'
-alias gcm='git commit -m'
-alias gco='git checkout '
-alias gl='git log'
-alias g='git '
-alias gp='git -P'
-alias gclone='git clone '
-alias glog='git -P log'
-alias h='history | grep -i '
-alias ip='ifconfig | grep inet\ '
-alias e='nvim '
-alias tm='tmux new -s $(basename $PWD)'
-alias k='bat --style=plain --color=always ~/shortcut-reference.md'
-
-# Functions
-function qf { find . -name "*${1}*" }
-function smush { cat $1 | tr '\n' ' ' }
-function dsh { docker exec -it $1 sh }
-function dbash { docker exec -it $1 bash }
-function dps { docker ps }
-function dpsa { docker ps -a }
-eval $(zoxide init zsh)
-function z {
-    local dir
-    dir="$(zoxide query -l | fzf --height 40% --reverse)" && cd "${dir}"
-}
-
+# -----------------------------------------------------------------------------
 # Completions
+# -----------------------------------------------------------------------------
 autoload -Uz compinit && compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
-# Vi mode
+# -----------------------------------------------------------------------------
+# Vi Mode & Key Bindings
+# -----------------------------------------------------------------------------
 bindkey -v
+
+# Navigation
 bindkey '^P' up-history
 bindkey '^N' down-history
 bindkey '^?' backward-delete-char
 bindkey '^h' backward-delete-char
 bindkey '^w' backward-kill-word
 bindkey '^r' history-incremental-search-backward
-export KEYTIMEOUT=1
 
-# Prompt
+# FZF bindings (loaded after fzf initialization)
+bindkey '^R' fzf-history-widget
+bindkey '^T' fzf-file-widget
+
+# -----------------------------------------------------------------------------
+# Prompt Configuration
+# -----------------------------------------------------------------------------
 autoload -Uz vcs_info
-precmd() { vcs_info }
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd vcs_info
+
 zstyle ':vcs_info:git:*' formats '%b'
-setopt PROMPT_SUBST
+
 PROMPT='
 %F{green}%B%m %~%b%f $(git_branch)
 %F{green}%B%(!.#.$)%b%f '
 
-# Git branch function
+# Git branch function for prompt
 git_branch() {
-    branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
-    if [[ $branch != "" ]]; then
+    local branch
+    branch=$(git symbolic-ref HEAD 2>/dev/null | awk 'BEGIN{FS="/"} {print $NF}')
+    if [[ -n $branch ]]; then
         echo '%F{green}%B \ue0a0 '$branch'%b%f'
     fi
 }
 
+# =============================================================================
+# ALIASES
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# File Operations
+# -----------------------------------------------------------------------------
+alias la='eza -l -b --no-user -a --no-quotes'
+alias l='eza -l1'
+alias e='nvim'
+alias k='bat --style=plain --color=always ~/shortcut-reference.md'
+
+# -----------------------------------------------------------------------------
+# Git Aliases
+# -----------------------------------------------------------------------------
+alias g='git'
+alias ga='git add'
+alias gaa='git add .'
+alias gau='git add -u'
+alias gb='git -P branch'
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gclone='git clone'
+alias gco='git checkout'
+alias gl='git log --oneline'
+alias glog='git -P log'
+alias gp='git -P'
+alias gs='git status'
+
+# -----------------------------------------------------------------------------
+# Docker Aliases
+# -----------------------------------------------------------------------------
+alias dps='docker ps'
+alias dpsa='docker ps -a'
+
+# -----------------------------------------------------------------------------
+# System & Utility Aliases
+# -----------------------------------------------------------------------------
+alias h='history | grep -i'
+alias ip='ifconfig | grep inet\'
+alias tm='tmux new -s $(basename $PWD)'
+
+# =============================================================================
+# FUNCTIONS
+# =============================================================================
+
+# Find files by name pattern
+qf() {
+    find . -name "*${1}*"
+}
+
+# Flatten file content to single line
+smush() {
+    cat "$1" | tr '\n' ' '
+}
+
+# Docker exec with intelligent shell selection
+dsh() {
+    local container="$1"
+    if [[ -z "$container" ]]; then
+        echo "Usage: dsh <container_name_or_id>"
+        return 1
+    fi
+    
+    # Try bash first, fall back to sh if it fails
+    if ! docker exec -it "$container" bash 2>/dev/null; then
+        echo "Bash not available, falling back to sh..."
+        docker exec -it "$container" sh
+    fi
+}
+
+# =============================================================================
+# EXTERNAL TOOL INITIALIZATION
+# =============================================================================
+
+# FZF
 source <(fzf --zsh)
+
+# Zoxide (smart cd)
+eval "$(zoxide init zsh)"
+
+# -----------------------------------------------------------------------------
+# Source Additional Configuration
+# -----------------------------------------------------------------------------
 [ -f ~/.zshenv ] && source ~/.zshenv
 
-# Ctrl+R for history search (this is usually default but we can ensure it)
-bindkey '^R' fzf-history-widget
-
-# Ctrl+T for file search
-bindkey '^T' fzf-file-widget
-bindkey '^[[A' fzf-history-widget
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+source /Users/taprice/.config/broot/launcher/bash/br
