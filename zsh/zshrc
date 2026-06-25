@@ -91,7 +91,6 @@ git_branch() {
 alias la='eza -l -b --no-user -a --no-quotes'
 alias l='eza -l1'
 alias e='nvim'
-alias k='bat --style=plain --color=always ~/shortcut-reference.md'
 
 # -----------------------------------------------------------------------------
 # Git Aliases
@@ -167,4 +166,43 @@ eval "$(zoxide init zsh)"
 # -----------------------------------------------------------------------------
 [ -f ~/.zshenv ] && source ~/.zshenv
 
+#function preexec_go() {
+#  if [[ -n "$1" && "$1" != "preexec_go" ]]; then
+    # CHANGE THIS PATH to the location of your 'envoy' executable
+#    ~/Desktop/projects/envoy/envoy "$1" >/dev/null 2>&1 & disown
+#  fi
+#}
+#preexec_functions+=(preexec_go)
+
 source /Users/taprice/.config/broot/launcher/bash/br
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/taprice/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+eval "$(direnv hook zsh)"
+export PATH="$HOME/.local/bin:$HOME/.composer/vendor/bin/:$PATH"
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
+
+# Dev Environment
+alias ddev='doppler run -- docker --context default compose -f docker/docker-compose.dev.yml'
+
+# Staging Environment
+alias dprod='doppler run --config prd -- docker --context default compose -f docker/docker-compose.prod.yml'
+
+krun() {
+  noglob kubectl run "debug-$(date +%s)" --rm -it --image=alpine -- "$@"
+}
+compdef '_dispatch kubectl kubectl' krun
+
+
+source <(kubectl completion zsh)
+alias k=kubectl
+alias d=devspace
+compdef __start_kubectl k
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/taprice/.local/bin:$PATH"
